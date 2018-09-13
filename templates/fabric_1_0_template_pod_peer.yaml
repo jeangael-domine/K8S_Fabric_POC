@@ -20,8 +20,6 @@ spec:
         image: hyperledger/fabric-couchdb:x86_64-1.0.0
         ports:
          - containerPort: 5984
-
-
       - name: $podName 
         image: hyperledger/fabric-peer:x86_64-1.0.0
         env:
@@ -66,23 +64,28 @@ spec:
          #- mountPath: /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts 
          #  name: certificate
          #  subPath: channel-artifacts
-         - mountPath: /etc/hyperledger/fabric/msp 
-           name: certificate
-           #subPath: crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp
-           subPath: $mspPath
-         - mountPath: /etc/hyperledger/fabric/tls
-           name: certificate
-           #subPath: crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/
-           subPath: $tlsPath
-         - mountPath: /host/var/run/
-           name: run
+         # - mountPath: /etc/hyperledger/fabric/msp 
+         #   name: certificate
+         #   #subPath: crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp
+         #   subPath: $mspPath
+         # - mountPath: /etc/hyperledger/fabric/tls
+         #   name: certificate
+         #   #subPath: crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/
+         #   subPath: $tlsPath
+          - mountPath: /etc/hyperledger/fabric/msp
+            name: peer0-org1-msp-volume
+          - mountPath: /host/var/run/
+            name: run
       volumes:
-       - name: certificate
-         persistentVolumeClaim:
-             claimName: $pvName
-       - name: run
-         hostPath:
-           path: /run
+        #- name: certificate
+        #  persistentVolumeClaim:
+        #      claimName: $pvName
+        - hostPath:
+            path: /root/Hyperledger_K8S_POC/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp
+          name: peer0-org1-msp-volume
+        - name: run
+          hostPath:
+            path: /var/run
        
 
 ---
@@ -99,7 +102,7 @@ spec:
    org: $namespace
  type: NodePort
  ports:
-   - name: externale-listen-endpoint
+   - name: external-listen-endpoint
      protocol: TCP
      port: 7051
      targetPort: 7051

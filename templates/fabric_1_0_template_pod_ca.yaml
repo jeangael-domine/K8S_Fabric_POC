@@ -14,7 +14,7 @@ spec:
        org: $namespace
        name: ca
     spec:
-     containers:
+      containers:
        - name: ca
          image: hyperledger/fabric-ca:x86_64-1.0.0
          env: 
@@ -33,13 +33,18 @@ spec:
          command: ["sh"]
          args:  ["-c", $command]
          volumeMounts:
+          #- mountPath: /etc/hyperledger/fabric-ca-server-config
+          #  name: certificate
+          #  subPath: $caPath
           - mountPath: /etc/hyperledger/fabric-ca-server-config
-            name: certificate
-            subPath: $caPath
-     volumes:
-       - name: certificate
-         persistentVolumeClaim:
-             claimName: $pvName 
+            name: crypto-config-artifacts-volume
+      volumes:
+        #- name: certificate
+        #  persistentVolumeClaim:
+        #    claimName: $pvName
+        - hostPath:
+            path: /root/Hyperledger_K8S_POC/crypto-config/peerOrganizations/org1.example.com/ca
+          name: crypto-config-artifacts-volume
 
 --- 
 apiVersion: v1
