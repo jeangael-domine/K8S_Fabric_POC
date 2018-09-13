@@ -1,28 +1,28 @@
-#apiVersion: v1
-#kind: PersistentVolume
-#metadata:
-#    name: $artifactsName
-#spec:
-#    capacity:
-#       storage: 500Mi
-#    accessModes:
-#       - ReadWriteMany
-#    nfs: 
-#      path: /opt/share/channel-artifacts
-#      server: 10.112.122.9 #change to your nfs server ip here
-#---
-#
-#apiVersion: v1
-#kind: PersistentVolumeClaim
-#metadata:
-#    namespace: $namespace
-#    name: $artifactsName
-#spec:
-#   accessModes:
-#     - ReadWriteMany
-#   resources:
-#      requests:
-#        storage: 10Mi
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: $artifactsName
+spec:
+    capacity:
+       storage: 500Mi
+    accessModes:
+       - ReadWriteMany
+    nfs: 
+      path: /opt/share/channel-artifacts
+      server: 10.112.122.9 #change to your nfs server ip here
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    namespace: $namespace
+    name: $artifactsName
+spec:
+   accessModes:
+     - ReadWriteMany
+   resources:
+      requests:
+        storage: 10Mi
 
 ---
 
