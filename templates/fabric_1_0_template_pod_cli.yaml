@@ -43,15 +43,8 @@ spec:
         - name: $name
           image:  hyperledger/fabric-tools:x86_64-1.0.0
           env:
-          
           - name: CORE_PEER_TLS_ENABLED
             value: "false"
-          #- name: CORE_PEER_TLS_CERT_FILE
-          #  value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1/peers/peer0.org1/tls/server.crt
-          #- name: CORE_PEER_TLS_KEY_FILE
-          #  value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1/peers/peer0.org1/tls/server.key
-          #- name: CORE_PEER_TLS_ROOTCERT_FILE
-          #  value: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1/peers/peer0.org1/tls/ca.crt
           - name: CORE_VM_ENDPOINT
             value: unix:///host/var/run/docker.sock
           - name: GOPATH
@@ -70,19 +63,8 @@ spec:
           command: [ "/bin/bash", "-c", "--" ]
           args: [ "while true; do sleep 30; done;" ]
           volumeMounts:
-          ## - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/peer
-          ##   name: certificate
-          ##   subPath: scripts
-           - mountPath: /host/var/run/
-             name: run
-          ## - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
-          ##   name: certificate
-          ##   subPath: chaincode
-          # - mountPath: /etc/hyperledger/fabric/msp
-          #   name: certificate
-          #   subPath: $mspPath
-          # - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
-          #   name: artifacts
+            - mountPath: /host/var/run/
+              name: run
             - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02
               name: chaincode-volume
             - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto
