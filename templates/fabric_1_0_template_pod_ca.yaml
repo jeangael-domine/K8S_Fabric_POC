@@ -43,7 +43,7 @@ spec:
         #  persistentVolumeClaim:
         #    claimName: $pvName
         - hostPath:
-            path: /root/K8S_Fabric_POC/crypto-config/peerOrganizations/org1.example.com/ca
+            path: /root/K8S_Fabric_POC/crypto-config/peerOrganizations/org1/ca
           name: crypto-config-artifacts-volume
 
 --- 
