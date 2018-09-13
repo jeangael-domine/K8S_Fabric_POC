@@ -6,14 +6,9 @@ CHANNEL_NAME=$1
 export CONFIG_PATH=$PWD
 export FABRIC_CFG_PATH=$PWD
 
-
 ## Generates Org certs
 function generateCerts (){
-	CRYPTOGEN=cryptogen
-
-	$CRYPTOGEN generate --config=./cluster-config.yaml	
-	
-
+	cryptogen generate --config=./cluster-config.yaml	
 }
 
 function generateChannelArtifacts() {
@@ -21,9 +16,7 @@ function generateChannelArtifacts() {
 		mkdir channel-artifacts
 	fi
 
-
-	CONFIGTXGEN=configtxgen
- 	$CONFIGTXGEN -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+	configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 # 	$CONFIGTXGEN -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
 #	$CONFIGTXGEN -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
 # 	$CONFIGTXGEN -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP
@@ -45,15 +38,6 @@ function clean () {
 	rm -rf /opt/share/crypto-config/*
 	rm -rf crypto-config
 }
-
-
-
-
-## Genrates orderer genesis block, channel configuration transaction and anchor peer upddate transactions
-##function generateChannelArtifacts () {
-##	CONFIGTXGEN=configtxgen
-	
-#}
 
 clean
 generateCerts
